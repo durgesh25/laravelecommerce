@@ -23,6 +23,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('/shop/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 
 <body>
@@ -60,7 +61,7 @@
         </div>
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a href="" class="text-decoration-none">
+                <a href="{{route('home')}}" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                 </a>
             </div>
@@ -83,7 +84,7 @@
                 </a>
                 <a href="" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge"> {{ Cart::getTotalQuantity()}}</span>
                 </a>
             </div>
         </div>
@@ -149,6 +150,7 @@
                         </div>
                     </div>
                 </nav>
+                @if(Route::current()->getName()=='home')
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 410px;">
@@ -183,6 +185,7 @@
                         </div>
                     </a>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -274,8 +277,21 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('/shop/js/main.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <!-- End custom js for this page-->
 </body>
 
 </html>
+<script>
+          @if(Session::has('success'))
+              toastr.success("{{ Session::get('success') }}")
+          @endif
+          @if(Session::has('error'))
+              toastr.error("{{ Session::get('error') }}")
+          @endif
+          @if(Session::has('info'))
+              toastr.info("{{ Session::get('info') }}")
+          @endif
+          </script> 
 @yield('extra-js')
 @yield('extra-css')

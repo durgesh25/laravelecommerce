@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('front.index');
+        $category= Category::all();
+        $product = Product:: all();
+        return view('front.index')->with(['category'=>$category,'products'=>$product]);
     }
 
     
@@ -36,5 +39,13 @@ class HomeController extends Controller
     {
        
         return view('front.shop');
+    }
+
+
+    public function productdetail($slug)
+    {
+        $details= Product::where('slug',$slug)->first();
+        return view('front.productdetails')->with('details',$details);
+
     }
 }
